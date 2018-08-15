@@ -1,0 +1,286 @@
+﻿<UserControl
+    x:Class="ContrastChecker.Components.ContrastChecker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:ContrastChecker.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:vm="clr-namespace:ContrastChecker.ViewModels"
+    d:DataContext="{d:DesignInstance vm:ContrastCheckerViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:StringToColorBrushConverter x:Key="StringToColorBrushConverter" />
+        <!--<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody}"></Style-->
+        <ControlTemplate x:Key="EnterKeyListener" TargetType="TextBox" />
+    </UserControl.Resources>
+    <Grid Margin="0,20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <md:Card
+                Width="300"
+                Margin="5,0,0,5"
+                Padding="8"
+                HorizontalAlignment="Left"
+                Background="{DynamicResource PrimaryHueDarkBrush}"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                UniformCornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Name="BackgroundColorTextBox"
+                        Margin="5,5"
+                        md:HintAssist.Hint="Background"
+                        Text="{Binding BackgroundColorString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Border
+                        Grid.Column="1"
+                        BorderBrush="{DynamicResource MaterialDesignTextAreaBorder}"
+                        BorderThickness="2">
+                        <Rectangle
+                            Width="50"
+                            Height="30"
+                            Fill="{Binding BackgroundColorString, Converter={StaticResource StringToColorBrushConverter}}" />
+                    </Border>
+                </Grid>
+            </md:Card>
+
+            <md:Card
+                Width="300"
+                Margin="5,0,0,5"
+                Padding="8"
+                HorizontalAlignment="Left"
+                Background="{DynamicResource PrimaryHueDarkBrush}"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                UniformCornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Name="ForegroundColorTextBox"
+                        Margin="5,5"
+                        md:HintAssist.Hint="Foreground"
+                        Text="{Binding ForegroundColorString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Border
+                        Grid.Column="1"
+                        BorderBrush="{DynamicResource MaterialDesignTextBoxBorder}"
+                        BorderThickness="2">
+                        <Rectangle
+                            Width="50"
+                            Height="30"
+                            Fill="{Binding ForegroundColorString, Converter={StaticResource StringToColorBrushConverter}}" />
+                    </Border>
+                </Grid>
+            </md:Card>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="EXAMPLE:" />
+                <md:Card
+                    Grid.Row="1"
+                    Width="200"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    Background="{Binding BackgroundColorString, Converter={StaticResource StringToColorBrushConverter}}"
+                    Foreground="{Binding ForegroundColorString, Converter={StaticResource StringToColorBrushConverter}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="16,16,16,4"
+                            Style="{StaticResource MaterialDesignHeadlineTextBlock}">
+                            Big text
+                        </TextBlock>
+                        <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Margin="16,0,16,8"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody2TextBlock}">
+                        Small text
+                        </TextBlock>
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="16,0,16,8"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Button
+                                Width="30"
+                                Padding="2,0,2,0"
+                                HorizontalAlignment="Right"
+                                md:RippleAssist.IsCentered="True"
+                                Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                <md:PackIcon Kind="Phone" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </md:Card>
+            </Grid>
+
+        </StackPanel>
+        <GridSplitter Grid.Column="0" />
+        <StackPanel Grid.Column="1">
+            <md:Card
+                Width="200"
+                Padding="8"
+                HorizontalAlignment="Left"
+                Background="{DynamicResource PrimaryHueDarkBrush}"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                UniformCornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        Text="Background brightness:" />
+                    <TextBlock Grid.Column="1" Text="{Binding BackgroundBrightness}" />
+                </Grid>
+            </md:Card>
+            <md:Card
+                Width="200"
+                Padding="8"
+                HorizontalAlignment="Left"
+                Background="{DynamicResource PrimaryHueDarkBrush}"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                UniformCornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        Text="Foreground brightness:" />
+                    <TextBlock Grid.Column="1" Text="{Binding ForegroundBrightness}" />
+                </Grid>
+            </md:Card>
+            <md:Card
+                Width="200"
+                Padding="8"
+                HorizontalAlignment="Left"
+                UniformCornerRadius="6">
+                <md:Card.Style>
+                    <Style TargetType="{x:Type md:Card}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ColorDifferenceIsAcceptable}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ColorDifferenceIsAcceptable}" Value="False">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="DarkRed" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </md:Card.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        Text="Color difference:" />
+                    <TextBlock Grid.Column="1" Text="{Binding ColorDifference, StringFormat={}{0:#}}" />
+                </Grid>
+            </md:Card>
+            <md:Card
+                Width="200"
+                Padding="8"
+                HorizontalAlignment="Left"
+                UniformCornerRadius="6">
+                <md:Card.Style>
+                    <Style TargetType="{x:Type md:Card}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BrightnessDifferenceIsAcceptable}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding BrightnessDifferenceIsAcceptable}" Value="False">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="DarkRed" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </md:Card.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        Text="Brightness difference:" />
+                    <TextBlock Grid.Column="1" Text="{Binding BrightnessDifference, StringFormat={}{0:F}}" />
+                </Grid>
+            </md:Card>
+            <md:Card
+                Width="200"
+                Padding="8"
+                HorizontalAlignment="Left"
+                UniformCornerRadius="6">
+                <md:Card.Style>
+                    <Style TargetType="{x:Type md:Card}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ContrastRatioIsAcceptable}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource MaterialDesignDarkBackground}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ContrastRatioIsAcceptable}" Value="False">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="DarkRed" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </md:Card.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        Text="Contrast ratio:" />
+                    <TextBlock Grid.Column="1" Text="{Binding ContrastRatio, StringFormat={}{0:F}}" />
+                </Grid>
+            </md:Card>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
